@@ -1,0 +1,38 @@
+:root {
+  font-family: -apple-system, 'Segoe UI', system-ui, sans-serif;
+  color: #161616;
+  background: #f4f4f4;
+}
+
+body { margin: 0; }
+
+.dashboard { max-width: 1200px; margin: 0 auto; padding: 24px 16px; }
+.dashboard__header h1 { margin: 0 0 4px; font-size: 1.5rem; }
+.dashboard__grid {
+  display: grid;
+  gap: 16px;
+  margin-top: 16px;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+}
+
+.muted { color: #6f6f6f; margin: 0; }
+.error { color: #da1e28; margin: 0; }
+.up { color: #198038; }
+.down { color: #da1e28; }
+
+.tabs { display: flex; gap: 8px; margin-top: 16px; }
+.tab {
+  padding: 8px 16px;
+  border: 1px solid #c6c6c6;
+  background: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.tab--active { background: #0f62fe; border-color: #0f62fe; color: #fff; }
+
+.chart-card { background: #fff; border: 1px solid #e0e0e0; border-radius: 4px; padding: 16px; }
+.chart-card__header { display: flex; justify-content: space-between; align-items: flex-start; }
+.chart-card__title { margin: 0; font-size: 1rem; }
+.chart-card__subtitle { margin: 2px 0 0; color: #525252; }
+.chart-card__badge { font-weight: 600; }
+.chart-card__body { margin-top: 12px; min-height: 40px; }

@@ -1,0 +1,38 @@
+name: Finance App CI
+
+on:
+  push:
+    branches:
+      - 'feature/**'
+      - 'fix/**'
+      - 'chore/**'
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: finance-app
+    env:
+      VITE_USE_MOCK: 'true'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: finance-app/package-lock.json
+      - run: npm ci
+      - name: Run npm run lint
+        run: npm run lint
+      - name: Run npm run test:ci
+        run: npm run test:ci
+      - name: Run npm run build
+        run: npm run build
+      - uses: actions/upload-artifact@v4
+        with:
+          name: finance-app-dist
+          path: finance-app/dist
