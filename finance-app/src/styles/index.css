@@ -36,3 +36,15 @@ body { margin: 0; }
 .chart-card__subtitle { margin: 2px 0 0; color: #525252; }
 .chart-card__badge { font-weight: 600; }
 .chart-card__body { margin-top: 12px; min-height: 40px; }
+
+.dashboard__compare { margin-top: 24px; display: grid; gap: 16px; }
+.symbol-search label { display: block; font-weight: 600; margin-bottom: 8px; }
+.symbol-search__row { display: flex; gap: 8px; }
+.symbol-search input {
+  flex: 1;
+  max-width: 280px;
+  padding: 8px 12px;
+  border: 1px solid #c6c6c6;
+  border-radius: 4px;
+}
+.symbol-search .error { margin-top: 8px; }

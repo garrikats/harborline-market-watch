@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { TICKERS } from '../../config/tickers';
+import { SUGGESTED_SYMBOLS, TICKERS } from '../../config/tickers';
 import { TIME_WINDOWS } from '../../config/timeWindows';
 import { generateMockSeries, mockProvider } from './mockProvider';
 import { selectProvider } from './index';
@@ -23,6 +23,15 @@ describe('mockProvider', () => {
 
   it('rejects unknown symbols with not_found', async () => {
     await expect(mockProvider.getSeries('ZZZ', 'day')).rejects.toMatchObject({ kind: 'not_found' });
+  });
+
+  it('serves the suggested comparison symbols with their own distinct series', async () => {
+    const unh = await mockProvider.getSeries('UNH', 'day');
+    for (const { symbol } of SUGGESTED_SYMBOLS) {
+      const series = await mockProvider.getSeries(symbol, 'day');
+      expect(series.symbol).toBe(symbol);
+      expect(series.points).not.toEqual(unh.points);
+    }
   });
 });
 
