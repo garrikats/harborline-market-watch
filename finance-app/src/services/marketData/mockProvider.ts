@@ -1,5 +1,5 @@
 import type { TimeWindowId } from '../../config/timeWindows';
-import { TICKERS } from '../../config/tickers';
+import { SUGGESTED_SYMBOLS, TICKERS } from '../../config/tickers';
 import { MarketDataError } from './errors';
 import type { MarketDataProvider, PricePoint, Series } from './types';
 
@@ -13,7 +13,11 @@ const SHAPE: Record<TimeWindowId, { count: number; step: number }> = {
   quarter: { count: 63, step: 24 * 60 * MINUTE },
 };
 
-const BASE_PRICE: Record<string, number> = { UNH: 520, ELV: 340, CI: 290, CVS: 62, HUM: 270 };
+const BASE_PRICE: Record<string, number> = {
+  UNH: 520, ELV: 340, CI: 290, CVS: 62, HUM: 270,
+  AAPL: 230, MSFT: 430, JNJ: 155,
+};
+const MOCK_SYMBOLS = new Set([...TICKERS, ...SUGGESTED_SYMBOLS].map((t) => t.symbol));
 
 function hash(text: string): number {
   let h = 2166136261;
@@ -50,7 +54,7 @@ export function generateMockSeries(symbol: string, window: TimeWindowId): Series
 /** Deterministic offline provider. Used when VITE_USE_MOCK is not "false" and in all tests. */
 export const mockProvider: MarketDataProvider = {
   async getSeries(symbol, window) {
-    if (!TICKERS.some((t) => t.symbol === symbol)) {
+    if (!MOCK_SYMBOLS.has(symbol)) {
       throw new MarketDataError('not_found', `Unknown symbol ${symbol}`);
     }
     return generateMockSeries(symbol, window);
